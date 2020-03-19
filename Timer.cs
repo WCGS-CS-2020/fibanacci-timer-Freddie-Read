@@ -1,69 +1,56 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
-class MainClass {
+namespace ConsoleApplication26
+{
+    class Program
+    {
+        static void Main()
+        {
+            Stopwatch sW = new Stopwatch();
+            sW.Restart();
+            fibRec(1, 1, 1000, 1);
+            Console.WriteLine("Recursive: {0}", sW.Elapsed);
+            sW.Stop();
+            sW.Restart();
+            fibIt(1, 1, 1000);
+            Console.WriteLine("Iterative: {0}", sW.Elapsed);
+            sW.Stop();
+            Console.ReadLine();
+        }
 
-  
-  public static void Main (string[] args) {
-    Stopwatch sw = new Stopwatch();
+        static void fibRec(int num1, int num2, int fibMax, int curr)
+        {
+            int answer = 0;
+            if (curr == fibMax)
+            {
+                answer = num1 + num2;
+                return;
+            }
+            else
+            {
+                answer = num1 + num2;
+                curr++;
+                fibRec(num2, answer, fibMax, curr);
+            }
+            
+        }
 
-    
-    for (int x = 5; x < 50; x = x+5) {
-      sw.Reset();
-      sw.Start();
-      int fib = fibrecurse (x, false);
-      sw.Stop();
-      Console.WriteLine("Recursive {1}th Fib={2}, Elapsed={0}",sw.Elapsed, x, fib);
+        static int fibIt(int num1, int num2, int fibMax)
+        {
+            int ans = 0;
+            for (int i = 0; i < fibMax; i++)
+            {
+                ans = num1 + num2;
+                num1 = num2;
+                num2 = ans;
+            }
+            return ans;
+        }
+
     }
-
-    Console.WriteLine ("\n\n");
-    
-    for (int x = 5; x < 50; x = x+5) {
-      sw.Reset();
-      sw.Start();
-      int fib = fibiterate (x, false);
-      sw.Stop();
-      Console.WriteLine("Iterative {1}th Fib={2}, Elapsed={0}",sw.Elapsed, x, fib);
-    }
-
-  }
-
-//
-// Return the xth fibanacci number using recursion
-// If print set to true, print out debug 
-//
-  static int fibrecurse (int x, bool print = false) {
-
-
-    int fib = 0;
-
-    //
-    // Insert your code here
-    //
-    
-    if (print == true)
-      Console.Write ("Fibanacci = {0}\n", fib);
-    return (fib);
-  }
-
-//
-// Return the xth fibanacci number using iteration
-// If print set to true, print out debug 
-//
-
-  static int fibiterate (int x, bool print = false) {
-    int [] fiblist = new int [100];
-    
-    fiblist [0] = 0;
-    fiblist [1] = 1;
-    
-    //
-    // Insert your code here
-    //
-
-  
-    if (print == true)
-      Console.Write ("Fibanacci = {0}\n", fiblist[x-1]);
-    return (fiblist[x-1]);
-  }
 }
